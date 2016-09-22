@@ -11,14 +11,14 @@ namespace MemoryManagement
         private int m_ProcessID;
         private int m_ProcessSize;
         private int m_ProcessDuration;
-        private MainActivity.ProcessStatus m_ProcessStatus;
+        private Form1.ProcessStatus m_ProcessStatus;
 
         public Process()
         {
             // another constructor
         }
 
-        public Process(int PID, int PROC_SIZE, int PROC_DURATION, MainActivity.ProcessStatus PROC_STAT)
+        public Process(int PID, int PROC_SIZE, int PROC_DURATION, Form1.ProcessStatus PROC_STAT)
         {
             m_ProcessID = PID;
             m_ProcessSize = PROC_SIZE;
@@ -55,12 +55,12 @@ namespace MemoryManagement
             this.m_ProcessDuration = m_Proc_Duration;
         }
 
-        public MainActivity.ProcessStatus get_ProcessStatus()
+        public Form1.ProcessStatus get_ProcessStatus()
         {
             return m_ProcessStatus;
         }
 
-        public void set_ProcessStatus(MainActivity.ProcessStatus m_Proc_Stat)
+        public void set_ProcessStatus(Form1.ProcessStatus m_Proc_Stat)
         {
             this.m_ProcessStatus = m_Proc_Stat;
         }
