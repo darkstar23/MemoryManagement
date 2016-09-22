@@ -43,6 +43,7 @@
             this.button_Add = new System.Windows.Forms.Button();
             this.button_NEXT_JOB = new System.Windows.Forms.Button();
             this.richTextBox_Updater = new System.Windows.Forms.RichTextBox();
+            this.button_Simulate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label_PID
@@ -173,11 +174,22 @@
             this.richTextBox_Updater.TabIndex = 14;
             this.richTextBox_Updater.Text = "";
             // 
+            // button_Simulate
+            // 
+            this.button_Simulate.Location = new System.Drawing.Point(231, 121);
+            this.button_Simulate.Name = "button_Simulate";
+            this.button_Simulate.Size = new System.Drawing.Size(127, 23);
+            this.button_Simulate.TabIndex = 15;
+            this.button_Simulate.Text = "SIMULATE";
+            this.button_Simulate.UseVisualStyleBackColor = true;
+            this.button_Simulate.Click += new System.EventHandler(this.button_Simulate_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 266);
+            this.Controls.Add(this.button_Simulate);
             this.Controls.Add(this.richTextBox_Updater);
             this.Controls.Add(this.button_NEXT_JOB);
             this.Controls.Add(this.button_Add);
@@ -218,6 +230,7 @@
         private System.Windows.Forms.Button button_Add;
         private System.Windows.Forms.Button button_NEXT_JOB;
         private System.Windows.Forms.RichTextBox richTextBox_Updater;
+        private System.Windows.Forms.Button button_Simulate;
     }
 }
 

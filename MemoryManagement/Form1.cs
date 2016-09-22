@@ -38,6 +38,107 @@ namespace MemoryManagement
 
        }
 
+        public void FREE_MEM_LIST_UPDATE()
+        {
+            FREE_MEM_BLOCK_LIST.Clear();
+
+            for(int i = 0; i < MEM_SIZE; i++)
+            {
+                //FREE_MEM_BLOCK_LIST.Add(FREE_MEM_BLOCK_SEARCH(SYS_MEM_BLOCK));
+                if(FREE_MEM_BLOCK_LIST[i].get_MemoryEnd() == MEM_SIZE)
+                {
+                    break;
+                }
+            }
+        }
+
+        public MemoryBlock USED_MEM_BLOCK_SEARCH(List<SystemMemoryBlock> MEM)
+        {
+            MemoryBlock USED_MEM = new MemoryBlock(0, 0, 0, 0);
+            int CNT = 0;
+            int CNT_BEGIN = 0;
+            int PID = 0;
+
+            for(int i = 0; i < MEM_SIZE; i++)
+            {
+                if(MEM[i].get_Assigned_ProcessID() != 0)
+                {
+                    CNT += 1;
+                    if(CNT == 1)
+                    {
+                        CNT_BEGIN = i;
+                        PID = MEM[i - 1].get_Assigned_ProcessID();
+                    }
+                }
+                else if(CNT > 0)
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            if(CNT == 0)
+            {
+                USED_MEM.set_MemoryStart(CNT_BEGIN);
+                USED_MEM.setMemoryEnd(CNT_BEGIN);
+            }
+            else if(CNT != 0)
+            {
+                USED_MEM.set_MemoryStart(CNT_BEGIN);
+                USED_MEM.set_AssignedProcessID(PID);
+                USED_MEM.setMemoryEnd( ( USED_MEM.get_MemoryStart() + (CNT - 1) ) );
+            }
+            USED_MEM.set_MemorySize( ( USED_MEM.get_MemoryEnd() - CNT_BEGIN ) );
+
+            return USED_MEM;
+        }
+
+        public void USED_MEM_LIST_UPDATE()
+        {
+            USED_MEM_BLOCK_LIST.Clear();
+            MemoryBlock MEM_BLOCK = new MemoryBlock();
+
+            for(int i = 0; i < MEM_SIZE; i++)
+            {
+               // MEM_BLOCK = (USED_MEM_BLOCK_SEARCH(SYS_MEM_BLOCK));
+               if(MEM_BLOCK.get_MemorySize() != 0)
+                {
+                    USED_MEM_BLOCK_LIST.Add(MEM_BLOCK);
+                }
+            }
+        }
+
+        public void UPDATE_SUSPENDED_PROC_LIST()
+        {
+            SUSPENDED_PROC_LIST.Clear();
+            for(int i = 0; i < ALL_PROC_LIST.Count; i++)
+            {
+                if(ALL_PROC_LIST[i].get_ProcessStatus() == ProcessStatus.WAITING)
+                {
+                    SUSPENDED_PROC_LIST.Add(ALL_PROC_LIST[i]);
+                }
+            }
+        }
+
+        public void assign_MEM_BLOCK(Process PROC, List<MemoryBlock> MEM)
+        {
+            for(int i = 0; i < MEM.Count; i++)
+            {
+                if(PROC.get_ProcessSize() <= MEM[i].get_MemorySize())
+                {
+                    for(int j = MEM[i].get_MemoryStart(); j < PROC.get_ProcessSize(); j++)
+                    {
+                        SYS_MEM_BLOCK[j].set_AssignedProcessID(PROC.get_PID());
+                    }
+                    PROC.set_ProcessStatus(ProcessStatus.RUNNING);
+                  //UPDATE_SUSPENDED_PROC_LIST();
+                }
+            }
+        }
+
        private void Form1_Load(object sender, EventArgs e)
        {
 
@@ -98,6 +199,23 @@ namespace MemoryManagement
                 MessageBox.Show("Please enter a valid number, or a number divisible by 50. you should feel bad about yourself, not going to reset that field so you'll realize your mistake.");
             }
                 
+        }
+
+        private void button_Simulate_Click(object sender, EventArgs e)
+        {
+            if(Regex.IsMatch(textBox_CoalescingT.Text, @"^\d+$") && Regex.IsMatch(textBox_CompactionT.Text, @"^\d+$") && textBox_CoalescingT.Text != null && textBox_CompactionT.Text != null)
+            {
+                textBox_CoalescingT.Enabled = false;
+                textBox_CompactionT.Enabled = false;
+
+                for(int i = 0; i < ALL_PROC_LIST.Count; i++)
+                {
+                    if (ALL_PROC_LIST[i].get_ProcessStatus() == ProcessStatus.WAITING)
+                    {
+                        mem
+                    }
+                }
+            }
         }
     }
 }
