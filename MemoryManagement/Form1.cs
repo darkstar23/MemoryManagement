@@ -38,13 +38,52 @@ namespace MemoryManagement
 
        }
 
+        public MemoryBlock FREE_MEM_BLOCK_SEARCH(List<SystemMemoryBlock> MEM)
+        {
+            MemoryBlock FREE_MEM = new MemoryBlock(0, 0, 0, 0);
+            int CNT2 = 0, CNT_BEGIN2 = 0;
+
+            for(int i =0; i < MEM_SIZE; i++)
+            {
+                if(MEM[i].get_Assigned_ProcessID() == 0)
+                {
+                    CNT2 += 1;
+                    if(CNT2 == 1)
+                    {
+                        CNT_BEGIN2 = i;
+                    }
+                    else if (CNT2 > 0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            if(CNT2 == 0)
+            {
+                FREE_MEM.set_MemoryStart(CNT_BEGIN2);
+                FREE_MEM.setMemoryEnd(CNT_BEGIN2);
+            }
+            else if (CNT2 != 0)
+            {
+                FREE_MEM.set_MemoryStart(CNT_BEGIN2);
+                FREE_MEM.setMemoryEnd((FREE_MEM.get_MemoryStart() + CNT2));
+            }
+            FREE_MEM.set_MemorySize(FREE_MEM.get_MemoryEnd() - CNT_BEGIN2);
+
+            return FREE_MEM;
+        }
+
         public void FREE_MEM_LIST_UPDATE()
         {
             FREE_MEM_BLOCK_LIST.Clear();
 
             for(int i = 0; i < MEM_SIZE; i++)
             {
-                //FREE_MEM_BLOCK_LIST.Add(FREE_MEM_BLOCK_SEARCH(SYS_MEM_BLOCK));
+                FREE_MEM_BLOCK_LIST.Add(FREE_MEM_BLOCK_SEARCH(SYS_MEM_BLOCK));
                 if(FREE_MEM_BLOCK_LIST[i].get_MemoryEnd() == MEM_SIZE)
                 {
                     break;
@@ -103,7 +142,7 @@ namespace MemoryManagement
 
             for(int i = 0; i < MEM_SIZE; i++)
             {
-               // MEM_BLOCK = (USED_MEM_BLOCK_SEARCH(SYS_MEM_BLOCK));
+               MEM_BLOCK = (USED_MEM_BLOCK_SEARCH(SYS_MEM_BLOCK));
                if(MEM_BLOCK.get_MemorySize() != 0)
                 {
                     USED_MEM_BLOCK_LIST.Add(MEM_BLOCK);
@@ -134,7 +173,7 @@ namespace MemoryManagement
                         SYS_MEM_BLOCK[j].set_AssignedProcessID(PROC.get_PID());
                     }
                     PROC.set_ProcessStatus(ProcessStatus.RUNNING);
-                  //UPDATE_SUSPENDED_PROC_LIST();
+                  UPDATE_SUSPENDED_PROC_LIST();
                 }
             }
         }
@@ -212,7 +251,7 @@ namespace MemoryManagement
                 {
                     if (ALL_PROC_LIST[i].get_ProcessStatus() == ProcessStatus.WAITING)
                     {
-                        mem
+
                     }
                 }
             }
