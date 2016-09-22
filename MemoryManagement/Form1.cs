@@ -251,7 +251,11 @@ namespace MemoryManagement
                 {
                     if (ALL_PROC_LIST[i].get_ProcessStatus() == ProcessStatus.WAITING)
                     {
+                        assign_MEM_BLOCK(ALL_PROC_LIST[i], FREE_MEM_BLOCK_LIST);
 
+                        FREE_MEM_LIST_UPDATE();
+
+                        USED_MEM_LIST_UPDATE();
                     }
                 }
             }
