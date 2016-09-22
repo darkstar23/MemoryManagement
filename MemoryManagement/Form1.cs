@@ -14,6 +14,7 @@ namespace MemoryManagement
 {
     public partial class Form1 : Form
     {
+        private int MEM_SIZE = 1000;
        public List<SystemMemoryBlock> SYS_MEM_BLOCK = new List<SystemMemoryBlock>();
        public List<MemoryBlock> FREE_MEM_BLOCK_LIST = new List<MemoryBlock>();
        public List<MemoryBlock> USED_MEM_BLOCK_LIST = new List<MemoryBlock>();
@@ -74,6 +75,7 @@ namespace MemoryManagement
             if(Regex.IsMatch(textBox_ProcDuration.Text, @"^\d+$") && Regex.IsMatch(textBox_ProcSize.Text, @"^\d+$") && CNT_TO_NEXT_JOB < int.Parse(textBox_NUM_JOBS.Text) && int.Parse(textBox_ProcSize.Text) % 50 == 0)
             {
                 ALL_PROC_LIST.Add(new MemoryManagement.Process((CNT_TO_NEXT_JOB + 1), int.Parse(textBox_ProcSize.Text), int.Parse(textBox_ProcDuration.Text), ProcessStatus.WAITING));
+                SUSPENDED_PROC_LIST.Add(new MemoryManagement.Process((CNT_TO_NEXT_JOB + 1), int.Parse(textBox_ProcSize.Text), int.Parse(textBox_ProcDuration.Text), ProcessStatus.WAITING));
                 label_PID_NUM.Text = (CNT_TO_NEXT_JOB + 1).ToString();
                 richTextBox_Updater.AppendText("PID: "+ (CNT_TO_NEXT_JOB + 1).ToString() + " | Size:" + textBox_ProcSize.Text + " | Duration: " + textBox_ProcDuration.Text + "\n") ;
                 textBox_ProcDuration.ResetText();
